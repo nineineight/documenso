@@ -16,6 +16,9 @@ services:
       - database:/var/lib/postgresql/data
 
   documenso:
+    build:
+      context: ../..
+      dockerfile: docker/Dockerfile
     image: documenso/documenso:latest
     depends_on:
       database:
