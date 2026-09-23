@@ -90,7 +90,7 @@ COPY --from=builder /app/turbo.json ./turbo.json
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 
-RUN npx turbo run build --filter=@documenso/remix...
+RUN npx lingui compile && npx turbo run build --filter=@documenso/remix...
 
 ###########################
 #     RUNNER CONTAINER    #
@@ -140,6 +140,9 @@ COPY --from=installer --chown=nodejs:nodejs /app/apps/remix/public ./apps/remix/
 # Copy the prisma binary, schema and migrations
 COPY --from=installer --chown=nodejs:nodejs /app/packages/prisma/schema.prisma ./packages/prisma/schema.prisma
 COPY --from=installer --chown=nodejs:nodejs /app/packages/prisma/migrations ./packages/prisma/migrations
+
+# Copy compiled translations for i18n
+COPY --from=installer --chown=nodejs:nodejs /app/packages/lib/translations ./packages/lib/translations
 
 # Generate the prisma client again, this time only targeting the client generator
 RUN npx prisma generate --schema ./packages/prisma/schema.prisma --generator client \
