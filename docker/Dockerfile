@@ -86,7 +86,7 @@ RUN npm ci
 # Then copy all the source code (as it changes more often)
 COPY --from=builder /app/out/full/ .
 # Finally copy the turbo.json file so that we can run turbo commands
-COPY turbo.json turbo.json
+COPY --from=builder /app/turbo.json ./turbo.json
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 
