@@ -6,6 +6,8 @@ services:
       context: ../..
       dockerfile: docker/Dockerfile
     image: documenso/documenso:latest
+    networks:
+      - dokploy-network
     expose:
       - "3000"
     environment:
@@ -29,4 +31,8 @@ services:
       - NEXT_PRIVATE_SMTP_FROM_NAME=${NEXT_PRIVATE_SMTP_FROM_NAME:-${SMTP_FROM_NAME}}
       - NEXT_PRIVATE_SMTP_FROM_ADDRESS=${NEXT_PRIVATE_SMTP_FROM_ADDRESS:-${SMTP_FROM_ADDRESS}}
       - NEXT_PRIVATE_SIGNING_LOCAL_FILE_PASSPHRASE=${NEXT_PRIVATE_SIGNING_LOCAL_FILE_PASSPHRASE}
+
+networks:
+  dokploy-network:
+    external: true
 
