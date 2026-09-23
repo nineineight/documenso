@@ -6,8 +6,8 @@ services:
       context: ../..
       dockerfile: docker/Dockerfile
     image: documenso/documenso:latest
-    ports:
-      - "${PORT:-3000}:3000"
+    expose:
+      - "3000"
     environment:
       - PORT=${PORT:-3000}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
