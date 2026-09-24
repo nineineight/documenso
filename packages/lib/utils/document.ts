@@ -1,6 +1,7 @@
 import type { DocumentMeta, Envelope, OrganisationGlobalSettings, Recipient, Team, User } from '@prisma/client';
 import { DocumentDistributionMethod, DocumentStatus } from '@prisma/client';
 
+import { APP_I18N_OPTIONS } from '../constants/locales';
 import { DEFAULT_DOCUMENT_TIME_ZONE } from '../constants/time-zones';
 import { resolveSigningOrder } from '../server-only/signature-level/resolve-signing-order';
 import type { TDocumentLite, TDocumentMany } from '../types/document';
@@ -44,7 +45,7 @@ export const extractDerivedDocumentMeta = (
   // Note: If you update this you will also need to update `create-document-from-template.ts`
   // since there is custom work there which allows 3 overrides.
   return {
-    language: meta.language || settings.documentLanguage,
+    language: meta.language || settings.documentLanguage || APP_I18N_OPTIONS.defaultLocale,
     timezone: meta.timezone || settings.documentTimezone || DEFAULT_DOCUMENT_TIME_ZONE,
     dateFormat: meta.dateFormat || settings.documentDateFormat,
     message: meta.message || null,

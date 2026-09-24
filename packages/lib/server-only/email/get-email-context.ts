@@ -14,6 +14,7 @@ import { match, P } from 'ts-pattern';
 
 import { IS_BILLING_ENABLED } from '../../constants/app';
 import { DOCUMENSO_INTERNAL_EMAIL } from '../../constants/email';
+import { APP_I18N_OPTIONS, isValidLanguageCode } from '../../constants/i18n';
 import { AppError, AppErrorCode } from '../../errors/app-error';
 import { logger } from '../../utils/logger';
 import {
@@ -99,7 +100,10 @@ export const getEmailContext = async (options: GetEmailContextOptions): Promise<
     emailContext = await handleTeamEmailContext(source.teamId);
   }
 
-  const emailLanguage = meta?.language || emailContext.settings.documentLanguage;
+  const emailLanguage =
+    (isValidLanguageCode(meta?.language) && meta.language) ||
+    (isValidLanguageCode(emailContext.settings.documentLanguage) && emailContext.settings.documentLanguage) ||
+    APP_I18N_OPTIONS.defaultLocale;
 
   const transportResolution = emailContext.claims.emailTransportId
     ? await resolveEmailTransport(emailContext.claims.emailTransportId)

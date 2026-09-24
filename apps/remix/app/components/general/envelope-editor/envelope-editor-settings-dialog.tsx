@@ -4,7 +4,12 @@ import { DATE_FORMATS, DEFAULT_DOCUMENT_DATE_FORMAT } from '@documenso/lib/const
 import { DOCUMENT_DISTRIBUTION_METHODS, DOCUMENT_SIGNATURE_TYPES } from '@documenso/lib/constants/document';
 import { ZEnvelopeExpirationPeriod } from '@documenso/lib/constants/envelope-expiration';
 import { ZEnvelopeReminderSettings } from '@documenso/lib/constants/envelope-reminder';
-import { isValidLanguageCode, SUPPORTED_LANGUAGE_CODES, SUPPORTED_LANGUAGES } from '@documenso/lib/constants/i18n';
+import {
+  APP_I18N_OPTIONS,
+  isValidLanguageCode,
+  SUPPORTED_LANGUAGE_CODES,
+  SUPPORTED_LANGUAGES,
+} from '@documenso/lib/constants/i18n';
 import { DEFAULT_DOCUMENT_TIME_ZONE, TIME_ZONES } from '@documenso/lib/constants/time-zones';
 import { DO_NOT_INVALIDATE_QUERY_ON_MUTATION } from '@documenso/lib/constants/trpc';
 import { AppError } from '@documenso/lib/errors/app-error';
@@ -195,7 +200,7 @@ export const EnvelopeEditorSettingsDialog = ({ trigger, ...props }: EnvelopeEdit
         dateFormat: (envelope.documentMeta.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT) as TDocumentMetaDateFormat,
         distributionMethod: envelope.documentMeta.distributionMethod || DocumentDistributionMethod.EMAIL,
         redirectUrl: envelope.documentMeta.redirectUrl ?? '',
-        language: envelope.documentMeta.language ?? 'en',
+        language: envelope.documentMeta.language ?? APP_I18N_OPTIONS.defaultLocale,
         emailId: envelope.documentMeta.emailId ?? null,
         emailReplyTo: envelope.documentMeta.emailReplyTo ?? undefined,
         emailSettings: ZDocumentEmailSettingsSchema.parse(envelope.documentMeta.emailSettings),

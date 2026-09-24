@@ -959,7 +959,7 @@ model OrganisationGlobalSettings {
   organisation Organisation?
 
   documentVisibility        DocumentVisibility @default(EVERYONE)
-  documentLanguage          String             @default("en")
+  documentLanguage          String             @default("pt-BR")
   includeSenderDetails      Boolean            @default(true)
   includeSigningCertificate Boolean            @default(true)
   includeAuditLog           Boolean            @default(false)
