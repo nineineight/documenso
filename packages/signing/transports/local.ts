@@ -6,7 +6,7 @@ const loadP12 = (): Uint8Array => {
   const localFileContents = env('NEXT_PRIVATE_SIGNING_LOCAL_FILE_CONTENTS');
 
   if (localFileContents) {
-    return Buffer.from(localFileContents, 'base64');
+    return Buffer.from(localFileContents.trim(), 'base64');
   }
 
   const localFilePath = env('NEXT_PRIVATE_SIGNING_LOCAL_FILE_PATH');
@@ -35,7 +35,12 @@ export type CreateLocalSignerOptions = {
 export const createLocalSigner = async ({ buildChain = true }: CreateLocalSignerOptions = {}) => {
   const p12 = loadP12();
 
-  return await P12Signer.create(p12, env('NEXT_PRIVATE_SIGNING_PASSPHRASE') || '', {
+  const passphrase =
+    env('NEXT_PRIVATE_SIGNING_PASSPHRASE') ||
+    env('NEXT_PRIVATE_SIGNING_LOCAL_FILE_PASSPHRASE') ||
+    '';
+
+  return await P12Signer.create(p12, passphrase, {
     buildChain,
   });
 };
